@@ -1,4 +1,4 @@
-import { Context } from 'https://deno.land/x/oak@v11.1.0/mod.ts';
+import { Context } from '../deps.ts';
 import { ScraperService } from '../services/Scraper.service.ts';
 
 export async function getJobs(ctx: Context): Promise<void> {

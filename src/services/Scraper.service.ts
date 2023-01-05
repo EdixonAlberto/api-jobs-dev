@@ -1,4 +1,4 @@
-import { CheerioAPI, load } from 'https://esm.sh/cheerio@1.0.0-rc.12';
+import { CheerioAPI, load } from '../deps.ts';
 
 export class ScraperService {
 	private baseUrl: string;

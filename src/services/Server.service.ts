@@ -1,4 +1,4 @@
-import { Application } from 'https://deno.land/x/oak@v11.1.0/mod.ts';
+import { Application } from '../deps.ts';
 import { routes } from '../routes/index.ts';
 
 export class Server {
