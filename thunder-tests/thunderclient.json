@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "bcb33210-5958-48f6-871d-bed6403903b5",
+    "colId": "8608da61-7e89-4f30-a270-0c26ad1e72ef",
+    "containerId": "",
+    "name": "get jobs",
+    "url": "{{API_URL}}/api/jobs",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-01-07T22:54:29.601Z",
+    "modified": "2023-01-07T22:54:29.601Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]
