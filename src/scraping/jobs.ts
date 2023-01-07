@@ -23,7 +23,10 @@ export async function scrapeJobs(): Promise<void> {
 	Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2));
 }
 
-const getDataJobs = (jobsResultList: Cheerio<Element>, $: CheerioAPI): Job[] => {
+const getDataJobs = (
+	jobsResultList: Cheerio<Element>,
+	$: CheerioAPI,
+): Job[] => {
 	const jobs = $(jobsResultList).map((_i: number, el: Element) => {
 		let elCheerio = $(el);
 		elCheerio = elCheerio.children('a');
