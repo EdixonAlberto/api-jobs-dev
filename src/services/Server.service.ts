@@ -25,8 +25,10 @@ export class Server {
 	}
 
 	public run(): void {
-		const port = 8000;
-		this.app.listen({ hostname: '0.0.0.0', port });
+		const hostname: string = Deno.env.get('HOST') || 'localhost';
+		const port: number = Number(Deno.env.get('PORT')) || 8000;
+
+		this.app.listen({ hostname, port });
 		console.log(`Sever listening on port ${port}`);
 	}
 }

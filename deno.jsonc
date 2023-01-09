@@ -2,12 +2,14 @@
   "tasks": {
     "dev": "deno run --watch --allow-net src/main.ts",
     "scrape": "deno run --allow-net --allow-write ./src/scraping/jobs.ts",
-    "update-lock": "deno cache --lock=deno.lock --lock-write src/deps.ts"
+    "update-lock": "deno cache --lock=deno.lock --lock-write src/deps.ts",
+    "prepare-husky": "deno run --allow-env --allow-read --allow-write --allow-run ./tools/prepare-husky.ts"
   },
   "fmt": {
     "files": {
       "include": [
-        "src/"
+        "src/",
+        "test/"
       ]
     },
     "options": {

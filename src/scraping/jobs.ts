@@ -1,17 +1,8 @@
 import { ScraperService } from '../services/Scraper.service.ts';
 import { Cheerio, CheerioAPI, Element } from '../deps.ts';
 
-interface Job {
-	title: string;
-	role: string;
-	time: string;
-	companyName: string;
-	location: string;
-	url: string;
-}
-
 export async function scrapeJobs(): Promise<void> {
-	const scraper = new ScraperService('https://www.getonbrd.com');
+	const scraper = new ScraperService();
 	const $ = await scraper.execute('/empleos/programacion');
 
 	const jobsResultList = $(
@@ -26,7 +17,7 @@ export async function scrapeJobs(): Promise<void> {
 const getDataJobs = (
 	jobsResultList: Cheerio<Element>,
 	$: CheerioAPI,
-): Job[] => {
+): TJob[] => {
 	const jobs = $(jobsResultList).map((_i: number, el: Element) => {
 		let elCheerio = $(el);
 		elCheerio = elCheerio.children('a');
