@@ -6,3 +6,4 @@
 
 # FILES
 .env
+src/data/*.json

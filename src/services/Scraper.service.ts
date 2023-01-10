@@ -1,8 +1,11 @@
 import { CheerioAPI, load } from '../deps.ts';
+import { ConfigService } from './Config.service.ts';
 
 export class ScraperService {
+	constructor(private readonly config = new ConfigService()) {}
+
 	public async execute(path: string): Promise<CheerioAPI> {
-		const baseUrl: string | undefined = Deno.env.get('URL_GETONBRD');
+		const baseUrl: string | undefined = this.config.get('URL_GETONBRD');
 		if (!baseUrl) throw new Error('Evironment "URL_GETONBRD" not found');
 
 		const pathname: string = path.startsWith('/') ? path : `/${path}`;

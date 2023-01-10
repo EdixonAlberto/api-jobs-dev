@@ -1,10 +1,11 @@
 import { Application } from '../deps.ts';
 import { routes } from '../routes/index.ts';
+import { ConfigService } from './Config.service.ts';
 
 export class Server {
 	private readonly app = new Application();
 
-	constructor() {
+	constructor(private readonly config = new ConfigService()) {
 		this.middlewares();
 		this.routes();
 	}
@@ -25,10 +26,10 @@ export class Server {
 	}
 
 	public run(): void {
-		const hostname: string = Deno.env.get('HOST') || 'localhost';
-		const port: number = Number(Deno.env.get('PORT')) || 8000;
+		const hostname: string = this.config.get('HOST') || 'localhost';
+		const port: number = Number(this.config.get('PORT')) || 8000;
 
 		this.app.listen({ hostname, port });
-		console.log(`Sever listening on port ${port}`);
+		console.log(`Sever listening in: http://${hostname}:${port}`);
 	}
 }

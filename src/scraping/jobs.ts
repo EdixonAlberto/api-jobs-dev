@@ -1,8 +1,12 @@
-import { ScraperService } from '../services/Scraper.service.ts';
 import { Cheerio, CheerioAPI, Element } from '../deps.ts';
+import { ConfigService } from '../services/Config.service.ts';
+import { ScraperService } from '../services/Scraper.service.ts';
 
 export async function scrapeJobs(): Promise<void> {
+	const config = new ConfigService();
 	const scraper = new ScraperService();
+
+	await config.load();
 	const $ = await scraper.execute('/empleos/programacion');
 
 	const jobsResultList = $(
