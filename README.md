@@ -1,26 +1,58 @@
 # API Getonboard
 
-API Rest para buscar empleos de programacion desde la pagina de [Getonboard]()
+API Rest para buscar empleos desde la pagina de [Getonboard](https://www.getonbrd.com/). Creado con Deno 🦕
 
-# Inicio
-
-
+## Inicio
 
 A continuacion se muestran los comandos necesarios para ejecutar el proyecto
 
 ```bash
-deno task prepare-husky # Prepara husky en el proyecto
+deno task prepare-husky # Preparar husky en el proyecto
 
-deno task scrape # Prepara los datos necesarios que consumirá la API
+deno task scrape # Preparar los datos necesarios que consumirá la API
 
-deno task dev # Inicia la API en modo desarrollo
+deno task dev # Iniciar la API en modo desarrollo
 ```
 
-## Como Contribuir al Proyecto
+## API
 
-Antes de empezar a crear commits en el proyecto deberá haber ejecutado el siguiente comando para preparar husky, esto permitirá mantener el codigo siempre limpio antes de cualquier commit.
+| Nombre   | Método | Ruta      |
+| -------- | ------ | --------- |
+| Get Jobs | GET    | /api/jobs |
+
+Ejemplo de Respuesta
+
+```js
+{
+  title: "Desarrollador(a) Full-Stack",
+  role: "Semi Senior",
+  time: "Full time",
+  postulationFast: false,
+  companyName: "3IT",
+  location: "For Banco de Chile Santiago (hybrid)",
+  url: "https://www.getonbrd.com/jobs/programming/desarrollador-a-full-stack-3it-santiago-ffac",
+  perks: [
+    "flexible hours",
+    "computer provided",
+    "informal dresscode",
+    "beverages and snacks"
+  ],
+  isNew: true,
+  hasPublishedSalary: true
+}
+```
+
+
+## Como Contribuir
+
+Antes de empezar a crear commits en el proyecto deberá ejecutar el siguiente comando para preparar husky, esto permitirá mantener el codigo siempre limpio antes de subir cualquier cambio.
 
 ```bash
-deno prepare-husky
+deno task prepare-husky
 ```
-Luego deberá subir su codigo
+Luego deberá subir su codigo a la rama `dev` y crear un PR a la rama `main`
+
+
+## Licencia
+
+[MIT](https://github.com/EdixonAlberto/api-getonboard/blob/main/LICENSE) &copy; Edixon Piña
