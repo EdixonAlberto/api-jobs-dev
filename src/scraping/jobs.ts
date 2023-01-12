@@ -37,10 +37,13 @@ const getDataJobs = (
 			// 	.children('img.gb-results-list__img')
 			// 	.attr('src');
 
-			const title: string = elInfo
+			let title: string = elInfo
 				.children('.gb-results-list__title')
 				.children('strong')
 				.text();
+
+			// Remover caracteres especiales o emojis al inicio del título
+			title = title.substring(title.search(/\w{1}/));
 
 			const [role, time]: string[] = elInfo
 				.children('.gb-results-list__title')
