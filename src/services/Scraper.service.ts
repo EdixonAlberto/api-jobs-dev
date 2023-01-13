@@ -1,4 +1,4 @@
-import { CheerioAPI, load } from '../deps.ts';
+import { CheerioAPI, load } from '$deps';
 import { ConfigService } from './Config.service.ts';
 
 export class ScraperService {

@@ -1,5 +1,5 @@
-import { Context } from '../deps.ts';
-import jobs from '../data/jobs.json' assert { 'type': 'json' };
+import { Context } from '$deps';
+import jobs from '$src/data/jobs.json' assert { 'type': 'json' };
 
 export function getJobs(ctx: Context): void {
 	ctx.response.body = {

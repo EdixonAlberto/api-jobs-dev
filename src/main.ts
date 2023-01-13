@@ -1,9 +1,9 @@
 import { ConfigService } from './services/Config.service.ts';
-import { Server } from './services/Server.service.ts';
+import { ServerService } from './services/Server.service.ts';
 
 try {
 	const config = new ConfigService();
-	const server = new Server();
+	const server = new ServerService();
 
 	await config.load();
 	server.run();

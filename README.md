@@ -62,7 +62,7 @@ deno task start
 # Prepara los datos necesarios que consumirá la API
 deno task scrape
 
-# Actualiza deno.lock para sincronizarlo con ./src/deps.ts
+# Actualiza deno.lock para sincronizarlo con ./deps.ts
 deno task update-lock
 
 # Prepara husky en el proyecto

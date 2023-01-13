@@ -1,18 +1,20 @@
-import { Application } from '../deps.ts';
-import { routes } from '../routes/index.ts';
+import { Application } from '$deps';
+import { routes } from '$src/routes/index.ts';
 import { ConfigService } from './Config.service.ts';
 
-export class Server {
-	private readonly app = new Application();
-
-	constructor(private readonly config = new ConfigService()) {
+export class ServerService {
+	constructor(
+		private readonly config = new ConfigService(),
+		private readonly app = new Application(),
+		private readonly controller = new AbortController(),
+	) {
 		this.middlewares();
 		this.routes();
 	}
 
-	private middlewares() {
+	private middlewares(): void {
 		// Asegurar que todas las peticiones empiecen por "/api"
-		this.app.use(async (ctx, next) => {
+		this.app.use(async (ctx, next): Promise<void> => {
 			const path: string[] = ctx.request.url.pathname.split('/');
 			if (path[1] === 'api') {
 				ctx.request.url.pathname = `${path[0]}/${path[2]}`;
@@ -25,11 +27,17 @@ export class Server {
 		this.app.use(routes);
 	}
 
-	public run(): void {
+	public run(): Application {
 		const hostname: string = this.config.get('HOST') || 'localhost';
 		const port: number = Number(this.config.get('PORT')) || 8000;
 
-		this.app.listen({ hostname, port });
-		console.log(`Sever listening in: http://${hostname}:${port}`);
+		this.app.listen({ hostname, port, signal: this.controller.signal });
+		console.log(`Server listening in: http://${hostname}:${port}`);
+
+		return this.app;
+	}
+
+	public stop(): void {
+		this.controller.abort();
 	}
 }

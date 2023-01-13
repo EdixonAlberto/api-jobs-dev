@@ -1,5 +1,5 @@
-import { Router } from '../deps.ts';
-import { getJobs } from '../controllers/jobs.controller.ts';
+import { Router } from '$deps';
+import { getJobs } from '$src/controllers/jobs.controller.ts';
 
 const router = new Router();
 

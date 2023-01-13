@@ -1,4 +1,4 @@
-import { loadEnv } from '../deps.ts';
+import { loadEnv } from '$deps';
 
 export class ConfigService {
 	private static ENV: Record<string, string> = { ['']: '' };
