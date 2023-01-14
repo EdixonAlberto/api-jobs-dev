@@ -5,7 +5,7 @@
     "scrape": "deno run --allow-env --allow-read --allow-net --allow-write ./src/scraping/jobs.ts",
     "update-lock": "deno cache --lock=deno.lock --lock-write ./deps.ts",
     "prepare-husky": "deno run --allow-env --allow-read --allow-write --allow-run ./tools/prepare-husky.ts",
-    "test": "deno test --allow-net"
+    "test": "deno test --allow-env --allow-read --allow-net"
   },
   "importMap": "./import_map.json",
   "fmt": {

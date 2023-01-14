@@ -4,18 +4,17 @@ API Rest para buscar empleos desde la pagina de [Getonboard](https://www.getonbr
 
 ## Inicio
 
-Antes de iniciar el proyecto debe crear un archivo `.env` en la raiz del proyecto, para esto compie la plantilla incorporada y cambie las variables que desee.
-```bash
-cp .env.template .env
-```
-
-Luego podrá iniciar el proyecto en modo desarrollo o producción.
+Para iniciar el proyecto debe escribir uno de los siguientes comandos.
 ```bash
 # Inicia el servidor en modo desarrollo
 deno task dev
 
 # Inicia el servidor en modo producción
 deno task start
+```
+Para cambiar la configuración por defecto debe crear un archivo `.env` en la raiz del proyecto, para esto compie la plantilla incorporada y cambie las variables que desee.
+```bash
+cp .env.template .env
 ```
 
 ## API
