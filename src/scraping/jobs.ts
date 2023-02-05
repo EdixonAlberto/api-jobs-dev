@@ -1,21 +1,21 @@
-import { Cheerio, CheerioAPI, Element } from '$deps';
-import { ConfigService } from '$src/services/Config.service.ts';
-import { ScraperService } from '$src/services/Scraper.service.ts';
+import { Cheerio, CheerioAPI, Element } from '$deps'
+import { ConfigService } from '$src/services/Config.service.ts'
+import { ScraperService } from '$src/services/Scraper.service.ts'
 
 export async function scrapeJobs(): Promise<void> {
-	const config = new ConfigService();
-	const scraper = new ScraperService();
+	const config = new ConfigService()
+	const scraper = new ScraperService()
 
-	await config.load();
-	const $ = await scraper.execute('/empleos/programacion');
+	await config.load()
+	const $ = await scraper.execute('/empleos/programacion')
 
 	const jobsResultList = $(
 		'body #right-col .main-container ul.sgb-results-list>div',
-	);
+	)
 
-	const jobs = getDataJobs(jobsResultList, $);
+	const jobs = getDataJobs(jobsResultList, $)
 
-	Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2));
+	Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2))
 }
 
 const getDataJobs = (
@@ -24,12 +24,12 @@ const getDataJobs = (
 ): TJob[] => {
 	const jobs = $(jobsResultList)
 		.map((_i: number, el: Element) => {
-			let elCheerio = $(el);
-			elCheerio = elCheerio.children('a');
+			let elCheerio = $(el)
+			elCheerio = elCheerio.children('a')
 
 			const elInfo = elCheerio
 				.children('.gb-results-list__main')
-				.children('.gb-results-list__info');
+				.children('.gb-results-list__info')
 
 			// const logo = elCheerio
 			// 	.children('.gb-results-list__main')
@@ -40,63 +40,63 @@ const getDataJobs = (
 			let title: string = elInfo
 				.children('.gb-results-list__title')
 				.children('strong')
-				.text();
+				.text()
 
 			// Remover caracteres especiales o emojis al inicio del título
-			title = title.substring(title.search(/\w{1}/));
+			title = title.substring(title.search(/\w{1}/))
 
 			const [role, time]: string[] = elInfo
 				.children('.gb-results-list__title')
 				.children('span')
 				.text()
 				.split('|')
-				.map((t: string) => t.trim());
+				.map((t: string) => t.trim())
 
 			const postulationFast: boolean = elInfo
 				.children('.gb-results-list__title')
 				.children('i')
-				.hasClass('fa-bolt');
+				.hasClass('fa-bolt')
 
 			const textInfo: string = elInfo
 				.children('div')
-				.text();
+				.text()
 
 			const [companyName, ...locations]: string[] = textInfo
 				.split('\n')
-				.filter((t) => t);
+				.filter((t) => t)
 
 			const location: string = locations
 				.join(' ')
 				.trim()
-				.replace(/^\w{1}/, (l) => l.toUpperCase());
+				.replace(/^\w{1}/, (l) => l.toUpperCase())
 
-			const url: string = elCheerio.attr('href') || '';
+			const url: string = elCheerio.attr('href') || ''
 
-			const perks: string[] = [];
+			const perks: string[] = []
 			elCheerio
 				.children('.gb-results-list__secondary')
 				.children('.gb-perks-list')
 				.children('i')
 				.each((_i, el) => {
-					const elIcon = $(el);
-					const className = elIcon.attr('class')!.split('perk-')[1];
+					const elIcon = $(el)
+					const className = elIcon.attr('class')!.split('perk-')[1]
 
 					if (elIcon.hasClass(`perk-${className}`)) {
-						perks.push(className.replaceAll('_', ' '));
+						perks.push(className.replaceAll('_', ' '))
 					}
-				});
+				})
 
 			const elBadges = elCheerio
 				.children('.gb-results-list__secondary')
-				.children('.gb-results-list__badges');
+				.children('.gb-results-list__badges')
 
 			const isNew: boolean = elBadges
 				.children('span')
-				.hasClass('badge');
+				.hasClass('badge')
 
 			const hasPublishedSalary: boolean = elBadges
 				.children('i')
-				.hasClass('fa-money');
+				.hasClass('fa-money')
 
 			return {
 				title,
@@ -109,10 +109,10 @@ const getDataJobs = (
 				perks,
 				isNew,
 				hasPublishedSalary,
-			};
-		}).toArray();
+			}
+		}).toArray()
 
-	return jobs;
-};
+	return jobs
+}
 
-scrapeJobs();
+scrapeJobs()

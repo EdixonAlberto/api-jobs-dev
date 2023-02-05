@@ -1,8 +1,8 @@
-import { Router } from '$deps';
-import { getJobs } from '$src/controllers/jobs.controller.ts';
+import { Router } from '$deps'
+import { getJobs } from '$src/controllers/jobs.controller.ts'
 
-const router = new Router();
+const router = new Router()
 
-router.get('/jobs', getJobs);
+router.get('/jobs', getJobs)
 
-export const routes = router.routes();
+export const routes = router.routes()

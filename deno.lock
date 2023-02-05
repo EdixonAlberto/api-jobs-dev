@@ -223,7 +223,9 @@
     "https://jspm.dev/superagent@6.1.0": "4b3082d71252c42abd3930d85d1f3c4b2e937e0fab2b5f1c9d19eac20dea89a9"
   },
   "npm": {
-    "specifiers": { "husky": "husky@8.0.3" },
+    "specifiers": {
+      "husky": "husky@8.0.3"
+    },
     "packages": {
       "husky@8.0.3": {
         "integrity": "sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==",
