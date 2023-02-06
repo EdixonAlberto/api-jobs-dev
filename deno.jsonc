@@ -8,6 +8,11 @@
     "test": "deno test --allow-env --allow-read --allow-net"
   },
   "importMap": "./import_map.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "https://cdn.skypack.dev/preact",
+    "noImplicitAny": false
+  },
   "fmt": {
     "files": {
       "include": [

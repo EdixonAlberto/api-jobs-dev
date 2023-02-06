@@ -5,6 +5,12 @@
   "deno.lint": true,
   "deno.importMap": "./import_map.json",
   "editor.formatOnSave": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },

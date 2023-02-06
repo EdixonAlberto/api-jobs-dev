@@ -28,11 +28,10 @@ export class ServerService {
 	}
 
 	public run(): Application {
-		const hostname: string = this.config.get('HOST') || 'localhost'
 		const port: number = Number(this.config.get('PORT')) || 8000
 
-		this.app.listen({ hostname, port, signal: this.controller.signal })
-		console.log(`Server listening in: http://${hostname}:${port}`)
+		this.app.listen({ port, signal: this.controller.signal })
+		console.log(`Server listening in: http://localhost:${port}`)
 
 		return this.app
 	}

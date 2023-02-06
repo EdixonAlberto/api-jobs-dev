@@ -1,6 +1,13 @@
 {
   "version": "2",
   "remote": {
+    "https://cdn.skypack.dev/-/preact-render-to-string@v5.2.6-1d2LEaQRnXYHIX3yAwTQ/dist=es2019,mode=imports/optimized/preact-render-to-string.js": "a05a3c470a1a90a1227176caba0613f37ed5d09d67f8b8302b85984514583a23",
+    "https://cdn.skypack.dev/-/preact@v10.11.2-ewGjmYHITJhWH3DdbJoJ/dist=es2019,mode=imports/optimized/preact.js": "8d7151fb686050689d05e74e7ed63a4ca333df9492fc1195109c93ae8d07f34c",
+    "https://cdn.skypack.dev/-/preact@v10.11.3-Ugxe7epKPQZ3xKBVvZAs/dist=es2019,mode=imports/optimized/preact.js": "ca69565d1771f9920380d2f238e06c65f28394d227322232a48961d29d882de3",
+    "https://cdn.skypack.dev/-/preact@v10.11.3-Ugxe7epKPQZ3xKBVvZAs/dist=es2019,mode=imports/optimized/preact/jsx-dev-runtime.js": "e7b9547aced95ba028406be44ae37221492c66870d63019b48dc9ff80e709f4e",
+    "https://cdn.skypack.dev/-/preact@v10.11.3-Ugxe7epKPQZ3xKBVvZAs/dist=es2019,mode=imports/optimized/preact/jsx-runtime.js": "2b29d3f126be9fa20167eeb3218f6c5afb07cab7166d659d19bfa3290fa80e51",
+    "https://cdn.skypack.dev/preact-render-to-string": "8b49ca83d62e3f462a3496f1970cf55b069bdb0c339c69f97888130c8573fd8c",
+    "https://cdn.skypack.dev/preact/jsx-runtime": "cda9ddc06b206265d740a4a85422dc73b90d63f173e664d7077d4a7e90b3a20d",
     "https://deno.land/std@0.129.0/async/abortable.ts": "a896ac6b0d4237bd2d2d248217cfa1f0d85ccda93cb25ebda55e33850e526be6",
     "https://deno.land/std@0.129.0/async/deadline.ts": "48ac998d7564969f3e6ec6b6f9bf0217ebd00239b1b2292feba61272d5dd58d0",
     "https://deno.land/std@0.129.0/async/debounce.ts": "564273ef242bcfcda19a439132f940db8694173abffc159ea34f07d18fc42620",
