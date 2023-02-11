@@ -1,6 +1,7 @@
 {
   "imports": {
     "$src/": "./src/",
-    "$deps": "./deps.ts"
+    "$deps": "./deps.ts",
+    "$types": "./src/types.ts"
   }
 }

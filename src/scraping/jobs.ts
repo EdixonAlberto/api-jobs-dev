@@ -1,118 +1,155 @@
 import { Cheerio, CheerioAPI, Element } from '$deps'
 import { ConfigService } from '$src/services/Config.service.ts'
 import { ScraperService } from '$src/services/Scraper.service.ts'
+import type { IJob, TJobDetails, TJobPartial } from '$types'
 
 export async function scrapeJobs(): Promise<void> {
 	const config = new ConfigService()
 	const scraper = new ScraperService()
-
 	await config.load()
-	const $ = await scraper.execute('/empleos/programacion')
+	const baseUrl: string = config.get('URL_GETONBRD') || 'https://www.getonbrd.com'
+	const $ = await scraper.execute(`${baseUrl}/empleos/programacion`)
 
-	const jobsResultList = $(
+	const sgbResultsList = $(
 		'body #right-col .main-container ul.sgb-results-list>div',
 	)
+	const jobPartialList = getJobPartialList(sgbResultsList, $)
+	const cheerioResponses = await Promise.allSettled(
+		jobPartialList.map((job: TJobPartial) => scraper.execute(job.url)),
+	)
+	const jobs: IJob[] = []
 
-	const jobs = getDataJobs(jobsResultList, $)
+	for (let i = 0; i < cheerioResponses.length; i++) {
+		const cheerioResponse = cheerioResponses[i]
+
+		if (cheerioResponse.status === 'fulfilled') {
+			const jobPartial = jobPartialList[i]
+			const $ = cheerioResponse.value
+			const details = getJobDetails($)
+
+			jobs.push({
+				...jobPartial,
+				details,
+			})
+		}
+	}
 
 	Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2))
 }
 
-const getDataJobs = (
-	jobsResultList: Cheerio<Element>,
-	$: CheerioAPI,
-): TJob[] => {
-	const jobs = $(jobsResultList)
-		.map((_i: number, el: Element) => {
-			let elCheerio = $(el)
-			elCheerio = elCheerio.children('a')
+function getJobPartialList(jobsResultList: Cheerio<Element>, $: CheerioAPI): TJobPartial[] {
+	const jobs = $(jobsResultList).map((_i: number, el: Element) => {
+		const elCheerio = $(el).children('a')
 
-			const elInfo = elCheerio
-				.children('.gb-results-list__main')
-				.children('.gb-results-list__info')
+		const elInfo = elCheerio
+			.children('.gb-results-list__main')
+			.children('.gb-results-list__info')
 
-			// const logo = elCheerio
-			// 	.children('.gb-results-list__main')
-			// 	.children('.gb-results-list__avatar')
-			// 	.children('img.gb-results-list__img')
-			// 	.attr('src');
+		// const logo = elCheerio
+		// 	.children('.gb-results-list__main')
+		// 	.children('.gb-results-list__avatar')
+		// 	.children('img.gb-results-list__img')
+		// 	.attr('src');
 
-			let title: string = elInfo
-				.children('.gb-results-list__title')
-				.children('strong')
-				.text()
+		let title: string = elInfo
+			.children('.gb-results-list__title')
+			.children('strong')
+			.text()
 
-			// Remover caracteres especiales o emojis al inicio del título
-			title = title.substring(title.search(/\w{1}/))
+		// Remover caracteres especiales o emojis al inicio del título
+		title = title.substring(title.search(/\w{1}/))
 
-			const [role, time]: string[] = elInfo
-				.children('.gb-results-list__title')
-				.children('span')
-				.text()
-				.split('|')
-				.map((t: string) => t.trim())
+		const [role, time]: string[] = elInfo
+			.children('.gb-results-list__title')
+			.children('span')
+			.text()
+			.split('|')
+			.map((t: string) => t.trim())
 
-			const postulationFast: boolean = elInfo
-				.children('.gb-results-list__title')
-				.children('i')
-				.hasClass('fa-bolt')
+		const postulationFast: boolean = elInfo
+			.children('.gb-results-list__title')
+			.children('i')
+			.hasClass('fa-bolt')
 
-			const textInfo: string = elInfo
-				.children('div')
-				.text()
+		const textInfo: string = elInfo
+			.children('div')
+			.text()
 
-			const [companyName, ...locations]: string[] = textInfo
-				.split('\n')
-				.filter((t) => t)
+		const [companyName, ...locations]: string[] = textInfo
+			.split('\n')
+			.filter((t) => t)
 
-			const location: string = locations
-				.join(' ')
-				.trim()
-				.replace(/^\w{1}/, (l) => l.toUpperCase())
+		const location: string = locations
+			.join(' ')
+			.trim()
+			.replace(/^\w{1}/, (l) => l.toUpperCase())
 
-			const url: string = elCheerio.attr('href') || ''
+		const url: string = elCheerio.attr('href') || ''
 
-			const perks: string[] = []
-			elCheerio
-				.children('.gb-results-list__secondary')
-				.children('.gb-perks-list')
-				.children('i')
-				.each((_i, el) => {
-					const elIcon = $(el)
-					const className = elIcon.attr('class')!.split('perk-')[1]
+		const perks: string[] = []
+		elCheerio
+			.children('.gb-results-list__secondary')
+			.children('.gb-perks-list')
+			.children('i')
+			.each((_i, el) => {
+				const elIcon = $(el)
+				const className = elIcon.attr('class')!.split('perk-')[1]
 
-					if (elIcon.hasClass(`perk-${className}`)) {
-						perks.push(className.replaceAll('_', ' '))
-					}
-				})
+				if (elIcon.hasClass(`perk-${className}`)) {
+					perks.push(className.replaceAll('_', ' '))
+				}
+			})
 
-			const elBadges = elCheerio
-				.children('.gb-results-list__secondary')
-				.children('.gb-results-list__badges')
+		const elBadges = elCheerio
+			.children('.gb-results-list__secondary')
+			.children('.gb-results-list__badges')
 
-			const isNew: boolean = elBadges
-				.children('span')
-				.hasClass('badge')
+		const isNew: boolean = elBadges
+			.children('span')
+			.hasClass('badge')
 
-			const hasPublishedSalary: boolean = elBadges
-				.children('i')
-				.hasClass('fa-money')
+		const hasPublishedSalary: boolean = elBadges
+			.children('i')
+			.hasClass('fa-money')
 
-			return {
-				title,
-				role,
-				time,
-				postulationFast,
-				companyName,
-				location,
-				url,
-				perks,
-				isNew,
-				hasPublishedSalary,
-			}
-		}).toArray()
+		return {
+			title,
+			role,
+			time,
+			postulationFast,
+			companyName,
+			location,
+			url,
+			perks,
+			isNew,
+			hasPublishedSalary,
+		}
+	}).toArray()
 
 	return jobs
+}
+
+function getJobDetails($: CheerioAPI): TJobDetails {
+	const rightCol = $('body #right-col')
+
+	const isThemeColored = rightCol.children().hasClass('gb-company-theme-colored')
+	const gbCompanyTheme = isThemeColored
+		? rightCol.children('.gb-company-theme-colored')
+		: rightCol.children('.gb-company-theme-clean')
+
+	const postulationsText = gbCompanyTheme
+		.children('.gb-landing-cover')
+		.children('.gb-container')
+		.children('.full-width')
+		.children('.size0')
+		.text()
+		.match(/\d+/)
+
+	const postulations = postulationsText ? Number(postulationsText[0]) : 0
+
+	return {
+		postulations,
+	}
 }
 
 scrapeJobs()
