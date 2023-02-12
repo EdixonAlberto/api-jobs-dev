@@ -5,12 +5,13 @@
     "scrape": "deno run --allow-env --allow-read --allow-net --allow-write ./src/scraping/jobs.ts",
     "update-lock": "deno cache --lock=deno.lock --lock-write ./deps.ts",
     "prepare-husky": "deno run --allow-env --allow-read --allow-write --allow-run ./tools/prepare-husky.ts",
-    "test": "deno test --allow-env --allow-read --allow-net"
+    "test": "deno test --allow-env --allow-read --allow-net",
+    "demo": "deno run -A --watch=demo/static/,demo/routes/ demo/dev.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "https://cdn.skypack.dev/preact",
+    "jsxImportSource": "preact",
     "noImplicitAny": false
   },
   "fmt": {
@@ -18,6 +19,7 @@
       "include": [
         "src/",
         "test/",
+        "demo/",
         "deps.ts"
       ]
     },

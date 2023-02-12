@@ -1,0 +1,9 @@
+@import './utils/normalize.css';
+@import './utils/variables.css';
+@import './utils/typography.css';
+
+@import './components/general.css';
+@import './components/layout.css';
+@import './components/header.css';
+@import './components/search.css';
+@import './components/jobs.css';

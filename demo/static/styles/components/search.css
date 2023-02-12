@@ -1,0 +1,24 @@
+.search {
+}
+
+.search__input {
+  background: #fff;
+}
+
+.search__input input {
+  width: calc(100% - 20% - 35px);
+}
+
+.seach__icon {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  text-align: center;
+  line-height: 35px;
+}
+
+.seach__icon img {
+  height: 12px;
+  width: 12px;
+}

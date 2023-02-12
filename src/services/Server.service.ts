@@ -1,4 +1,4 @@
-import { Application } from '$deps'
+import { Application, CORS } from '$deps'
 import { routes } from '$src/routes/index.ts'
 import { ConfigService } from './Config.service.ts'
 
@@ -13,6 +13,9 @@ export class ServerService {
 	}
 
 	private middlewares(): void {
+		// Enable cors
+		this.app.use(CORS())
+
 		// Asegurar que todas las peticiones empiecen por "/api"
 		this.app.use(async (ctx, next): Promise<void> => {
 			const path: string[] = ctx.request.url.pathname.split('/')

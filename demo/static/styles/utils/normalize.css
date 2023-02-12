@@ -1,0 +1,11 @@
+/* DEV */
+* {
+  /* outline: 1px solid red; */
+}
+
+body {
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  background: var(--color-grey-lite);
+}

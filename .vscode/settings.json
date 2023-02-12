@@ -1,7 +1,7 @@
 {
   "deno.enable": true,
   "deno.unstable": false,
-  "deno.config": "./deno.jsonc",
+  "deno.config": "./deno.json",
   "deno.lint": true,
   "deno.importMap": "./import_map.json",
   "editor.formatOnSave": true,
@@ -9,7 +9,7 @@
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "[css]": {
-    "editor.defaultFormatter": "vscode.css-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"

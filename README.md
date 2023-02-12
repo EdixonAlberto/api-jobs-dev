@@ -24,33 +24,46 @@ cp .env.template .env
 | Get Jobs | GET    | /api/jobs |
 
 Ejemplo de respuesta.
-```js
+
+```json
 {
   "total": 346,
   "jobs": [
     {
-      title: "Desarrollador(a) Full-Stack",
-      role: "Semi Senior",
-      time: "Full time",
-      postulationFast: false,
-      companyName: "3IT",
-      location: "For Banco de Chile Santiago (hybrid)",
-      url: "https://www.getonbrd.com/jobs/programming/desarrollador-a-full-stack-3it-santiago-ffac",
-      perks: [
+      "title": "Java Developer (+3 Years of Experience)",
+      "role": "Senior",
+      "time": "Full time",
+      "postulationFast": true,
+      "companyName": "Softserve",
+      "location": "Remote (Chile)",
+      "url": "https://www.getonbrd.com/jobs/programming/java-developer-3-years-of-experience-softserve-santiago",
+      "perks": [
+        "pet friendly",
         "flexible hours",
+        "health coverage",
         "computer provided",
         "informal dresscode",
+        "vacation over legal",
         "beverages and snacks"
       ],
-      isNew: true,
-      hasPublishedSalary: true
+      "isNew": false,
+      "hasPublishedSalary": true,
+      "details": {
+        "postulations": 25
+      }
     },
     { ... }
   ]
 }
 ```
+## Demo
 
-## Comandos
+En la ruta [/demo](./demo/) se encuentra el código fuente de una página de demostración la cual consume la API y muestra los resultados en una interfaz elegante. Esta página ha sido creada con el framework `fresh` y puede ser ejecutada con el comando:
+```bash
+deno task demo
+```
+
+## Lista de Comandos
 ```bash
 # Prepara los datos e inicia el servidor en modo desarrollo
 deno task dev
@@ -66,15 +79,34 @@ deno task update-lock
 
 # Prepara husky en el proyecto
 deno task prepare-husky
+
+# Ejcuta la página de demostración en el puerto 8000
+deno task demo
 ```
 
 ## Como Contribuir
 
-Antes de empezar a crear commits en el proyecto deberá ejecutar el siguiente comando para preparar husky, esto permitirá mantener el codigo siempre limpio antes de subir cualquier cambio.
+- Primeo realizar un fork a este repositorio en el branch `main`.
+
+- Antes de empezar a crear commits en el proyecto deberá ejecutar el siguiente comando (una única vez) para preparar husky, esto permitirá mantener el codigo siempre limpio antes de subir cambios.
 ```bash
 deno task prepare-husky
 ```
-Luego deberá subir su codigo a la rama `dev` y crear un PR a la rama `main`.
+
+- Agregue los cambios y cree sus commits.
+```bash
+git add .
+
+# Para agregar una nueva característica, escriba:
+git commit -m "feature: add new..."
+
+# Para agregar una corrección, escriba:
+git commit -m "fixmed: fix error in..."
+
+git push origin main
+```
+
+- Por último deberá crear un PR al branch `dev`.
 
 
 ## Licencia

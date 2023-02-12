@@ -1,0 +1,17 @@
+header {
+  height: 80px;
+  width: 100%;
+  margin-bottom: 80px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+header h2 {
+  margin: 0;
+  text-align: left;
+}
+
+header .icon__menu {
+  cursor: pointer;
+}

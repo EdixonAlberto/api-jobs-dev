@@ -1,0 +1,15 @@
+.layout__header {
+  height: 400px;
+  padding: 0 40px;
+  position: relative;
+  background: var(--color-green-dark);
+  background: linear-gradient(300deg, var(--color-green-lite) 0%, var(--color-green-dark) 50%);
+  text-align: center;
+  border-radius: 0 0 90px;
+  z-index: 2;
+}
+
+.layout__header p {
+  font-size: 18px;
+  color: var(--color-grey-dark);
+}
