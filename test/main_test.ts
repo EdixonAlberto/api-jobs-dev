@@ -1,6 +1,6 @@
 import { superoak } from '$deps'
-import { ServerService } from '$src/services/Server.service.ts'
-import jobs from '$src/data/jobs.json' assert { 'type': 'json' }
+import { ServerService } from '$/services/Server.service.ts'
+import jobs from '$/data/jobs.json' assert { 'type': 'json' }
 
 const server = new ServerService()
 

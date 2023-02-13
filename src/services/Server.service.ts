@@ -1,5 +1,5 @@
 import { Application, CORS } from '$deps'
-import { routes } from '$src/routes/index.ts'
+import { routes } from '$/routes/index.ts'
 import { ConfigService } from './Config.service.ts'
 
 export class ServerService {

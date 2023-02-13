@@ -1,5 +1,5 @@
 import { Context, renderToString } from '$deps'
-import { Docs } from '$src/components/Docs.tsx'
+import { Docs } from '$/components/Docs.tsx'
 
 // deno-lint-ignore no-explicit-any
 function render(jsx: any, props?: any) {

@@ -1,6 +1,6 @@
 import { Cheerio, CheerioAPI, Element } from '$deps'
-import { ConfigService } from '$src/services/Config.service.ts'
-import { ScraperService } from '$src/services/Scraper.service.ts'
+import { ConfigService } from '$/services/Config.service.ts'
+import { ScraperService } from '$/services/Scraper.service.ts'
 import type { IJob, TJobDetails, TJobPartial } from '$types'
 
 export async function scrapeJobs(): Promise<void> {
