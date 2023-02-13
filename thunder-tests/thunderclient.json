@@ -8,9 +8,18 @@
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-01-07T22:54:29.601Z",
-    "modified": "2023-01-07T22:54:29.601Z",
-    "headers": [],
+    "modified": "2023-02-14T03:05:56.900Z",
+    "headers": [
+      {
+        "name": "Origin",
+        "value": "http://localhost:8000"
+      }
+    ],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "123"
+    },
     "tests": []
   }
 ]

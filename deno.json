@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno task scrape && deno run --allow-env --allow-read --allow-net --watch src/main.ts",
+    "dev": "deno run --allow-env --allow-read --allow-net --watch src/main.ts",
     "start": "deno run --allow-env --allow-read --allow-net src/main.ts",
     "scrape": "deno run --allow-env --allow-read --allow-net --allow-write ./src/scraping/jobs.ts",
     "update-lock": "deno cache --lock=deno.lock --lock-write ./deps.ts",
@@ -11,7 +11,7 @@
   "importMap": "./import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact",
+    "jsxImportSource": "https://cdn.skypack.dev/preact",
     "noImplicitAny": false
   },
   "fmt": {

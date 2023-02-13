@@ -1,11 +1,9 @@
-import type { IJob } from '$types'
+export class ResponseDto<R = unknown> {
+	readonly response: R | null
+	readonly error: string[]
 
-export class ResponseDto {
-	readonly jobs: IJob[]
-	readonly total: number
-
-	constructor(jobs: IJob[]) {
-		this.jobs = jobs
-		this.total = jobs.length
+	constructor({ response, error = [] }: { response: R | null; error?: string[] }) {
+		this.response = response
+		this.error = error
 	}
 }

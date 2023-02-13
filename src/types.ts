@@ -19,4 +19,4 @@ export type TJobDetails = {
 	postulations: number
 }
 
-export type TResponseAPI = import('$/dto/Response.dto.ts').ResponseDto
+export type TResponseAPI<D> = import('$/dto/Response.dto.ts').ResponseDto<D>
