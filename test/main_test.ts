@@ -1,4 +1,4 @@
-import { superoak } from '$deps'
+import { superoak } from 'superoak'
 import { ServerService } from '$/services/Server.service.ts'
 import jobs from '$/data/jobs.json' assert { 'type': 'json' }
 
