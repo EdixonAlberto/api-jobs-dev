@@ -7,7 +7,7 @@ export class ConfigService {
 		ConfigService.ENV = await loadEnv()
 	}
 
-	public get(env: string): string {
-		return ConfigService.ENV[env]
+	public get(env: string): string | undefined {
+		return ConfigService.ENV[env] || Deno.env.get(env)
 	}
 }

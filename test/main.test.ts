@@ -11,7 +11,7 @@ Deno.test('Get Jobs', async () => {
 	const app = server.run()
 	const request = await superoak(app)
 
-	await request.get('/api/jobs').auth(config.get('ACCESS_TOKEN'), { type: 'bearer' }).expect({
+	await request.get('/api/jobs').auth(config.get('ACCESS_TOKEN') || '', { type: 'bearer' }).expect({
 		response: {
 			data: jobs,
 			total: jobs.length,

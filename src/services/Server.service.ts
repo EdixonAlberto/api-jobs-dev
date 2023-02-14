@@ -22,7 +22,7 @@ export class ServerService {
 			const { response: resp } = ctx
 			const { headers } = ctx.request
 			const origin = headers.get('origin')
-			const whiteList = this.config.get('WHITE_LIST')?.split(',') || []
+			const whiteList: string[] = this.config.get('WHITE_LIST')?.split(',') || []
 
 			if (!origin || whiteList.includes(origin)) {
 				await next()
@@ -77,8 +77,8 @@ export class ServerService {
 		this.app.use(routes)
 	}
 
-	public run(): Application {
-		const port: number = Number(this.config.get('PORT') || Deno.env.get('PORT')) || 4000
+	public run() {
+		const port: number = Number.parseInt(this.config.get('PORT') || '4000')
 
 		this.app.listen({ port, signal: this.controller.signal })
 		console.log(`Server listening at http://localhost:${port}`)
