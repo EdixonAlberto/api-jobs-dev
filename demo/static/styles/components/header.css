@@ -1,17 +1,19 @@
-header {
+.jd__headers {
   height: 80px;
   width: 100%;
-  margin-bottom: 80px;
+  padding: 0 40px;
+  position: fixed;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  z-index: 1000;
 }
 
-header h2 {
+.header__title {
   margin: 0;
   text-align: left;
 }
 
-header .icon__menu {
+.header__icon {
   cursor: pointer;
 }

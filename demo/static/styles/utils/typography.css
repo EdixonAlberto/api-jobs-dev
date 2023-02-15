@@ -18,3 +18,9 @@ body {
   font-size: 25px;
   font-weight: 700;
 }
+
+.fd-text {
+  font-size: 15px;
+  font-weight: 400;
+  color: #000;
+}

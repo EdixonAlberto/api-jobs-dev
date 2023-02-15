@@ -1,11 +1,12 @@
-/* DEV */
 * {
+  /* DEV */
   /* outline: 1px solid red; */
+  box-sizing: border-box;
 }
 
 body {
-  box-sizing: content-box;
   margin: 0;
   padding: 0;
   background: var(--color-grey-lite);
+  overflow-y: hidden;
 }

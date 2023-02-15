@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'preact/hooks'
+import Search from '$front/islands/Search.tsx'
 import { IJob, TResponseAPI } from '$types'
 
 export default function Jobs() {
@@ -9,20 +10,32 @@ export default function Jobs() {
 	}, [])
 
 	async function getJobs(): Promise<void> {
-		const response = await fetch('http://localhost:4000/api/jobs')
-		const data = await response.json() as TResponseAPI
-		const jobs = data.jobs
-		setJobs(jobs)
+		const response = await fetch('http://localhost:4000/api/jobs', {
+			headers: {
+				'Authorization': 'Bearer 123',
+			},
+		})
+		const data = await response.json() as TResponseAPI<{ total: number; data: IJob[] }>
+		if (data.response) {
+			const jobs = data.response.data.filter((job) => job.details.postulations < 10)
+			setJobs(jobs)
+		} else {
+			// TODO: loading false
+		}
 	}
 
 	return (
 		<div class='jobs'>
-			<h3 class='jobs__title'>Últimos Trabajos</h3>
+			<div class='jobs__header'>
+				<p>JobsDev es el destino número uno para buscar y listar increibles ofertas de trabajo remoto.</p>
+				<Search />
+				<h3 class='jobs__header__title'>Últimos Trabajos</h3>
+			</div>
 
-			<ul class='jobs__container'>
+			<ul class='jobs__main__container'>
 				{jobs.length
 					? jobs.map((job: IJob) => (
-						<li class='jobs__card'>
+						<li class='jobs__container__card'>
 							<div class='jobs__card__title'>
 								<span>{job.title}</span>
 								{job.isNew && <span>Nuevo</span>}
@@ -30,28 +43,21 @@ export default function Jobs() {
 
 							<div class='jobs__card__content'>
 								<div class='jobs__card__content__item'>
-									<img class='icon' src='/svgs/company.svg' alt='icon company' />
+									<img class='jd__icon' src='/svgs/company.svg' alt='icon company' />
 									<span>{job.companyName}</span>
 								</div>
 
 								<div class='jobs__card__content__item'>
-									<img class='icon' src='/svgs/location.svg' alt='icon company' />
+									<img class='jd__icon' src='/svgs/location.svg' alt='icon location' />
 									<span>{job.location}</span>
 								</div>
+
+								<a href={job.url} target='_blank' rel='noopener noreferrer'>Ver Detalles</a>
 							</div>
 						</li>
 					))
 					: <p>No hay trabajos publicados</p>}
 			</ul>
-
-			<div class='jobs__modal'>
-				<div class='modal__card'>
-					<div class='modal__title'>
-					</div>
-
-					<div class='details'></div>
-				</div>
-			</div>
 		</div>
 	)
 }
