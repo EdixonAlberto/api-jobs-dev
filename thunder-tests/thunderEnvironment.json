@@ -2,7 +2,7 @@
   {
     "_id": "64b15708-e224-466d-ab23-f20fef925c4f",
     "name": "DEV",
-    "default": true,
+    "default": false,
     "sortNum": 10000,
     "created": "2023-01-07T22:52:55.349Z",
     "modified": "2023-02-14T03:36:04.642Z",
@@ -17,16 +17,16 @@
   {
     "_id": "1db1d25d-6e4f-446c-a5e8-3c3322512c60",
     "name": "PROD",
-    "default": false,
+    "default": true,
     "sortNum": 30000,
     "created": "2023-02-15T02:27:31.122Z",
-    "modified": "2023-02-15T02:27:48.075Z",
+    "modified": "2023-02-15T02:48:44.623Z",
     "data": [
       {
         "name": "API_URL",
         "value": "https://api-getonboard-production.up.railway.app"
       }
     ],
-    "envFile": "../.env"
+    "envFile": "../.env.production"
   }
 ]

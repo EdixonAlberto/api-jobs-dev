@@ -1,7 +1,9 @@
-import { Cheerio, CheerioAPI, Element } from '$deps'
+import { Cheerio, CheerioAPI, Element } from 'cheerio/types'
 import { ConfigService } from '$/services/Config.service.ts'
 import { ScraperService } from '$/services/Scraper.service.ts'
 import type { IJob, TJobDetails, TJobPartial } from '$types'
+
+const MODE_DEV = false
 
 export async function scrapeJobs(): Promise<void> {
 	const config = new ConfigService()
@@ -15,7 +17,7 @@ export async function scrapeJobs(): Promise<void> {
 	)
 	const jobPartialList = getJobPartialList(sgbResultsList, $)
 	const cheerioResponses = await Promise.allSettled(
-		jobPartialList.map((job: TJobPartial) => scraper.execute(job.url)),
+		(MODE_DEV ? [jobPartialList[0]] : jobPartialList).map((job: TJobPartial) => scraper.execute(job.url)),
 	)
 	const jobs: IJob[] = []
 
@@ -34,7 +36,7 @@ export async function scrapeJobs(): Promise<void> {
 		}
 	}
 
-	Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2))
+	if (!MODE_DEV) Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2))
 }
 
 function getJobPartialList(jobsResultList: Cheerio<Element>, $: CheerioAPI): TJobPartial[] {
@@ -147,8 +149,64 @@ function getJobDetails($: CheerioAPI): TJobDetails {
 
 	const postulations = postulationsText ? Number(postulationsText[0]) : 0
 
+	const gbContainer = rightCol
+		.children('div.size1')
+		.children('#job-body')
+		.children('.gb-landing-section')
+		.children('.gb-container')
+
+	const remoteText = gbContainer
+		.children('p.block')
+		.text()
+		.replaceAll('\n', '')
+
+	const remote100 = [
+		'El trabajo es permanentemente remoto desde cualquier ubicación del mundo.',
+		'Candidates can reside anywhere in the world.',
+	].includes(remoteText)
+
+	const isOl = gbContainer
+		.children('div:nth-child(3)')
+		.children('.gb-rich-txt')
+		.has('ol').text() !== ''
+
+	const liList = isOl
+		? gbContainer
+			.children('div:nth-child(3)')
+			.children('.gb-rich-txt')
+			.children('ol')
+			.children('li')
+		: gbContainer
+			.children('div:nth-child(3)')
+			.children('.gb-rich-txt')
+			.children('ul')
+			.children('li')
+
+	const requestList = liList.map((_i, el) => $(el).text()).toArray()
+
+	let language = 'spanish'
+	for (const request of requestList) {
+		const hasEnglish: boolean = request.toLowerCase().search(/english|inglés/) > -1
+		if (hasEnglish) {
+			language = request
+			break
+		}
+	}
+
+	const gbTabsItemList = rightCol
+		.children('.js-hide-fixed-actions')
+		.children('.gb-container')
+		.children('div:nth-child(3)')
+		.children('.gb-tags')
+		.children('.gb-tags__item')
+
+	const skills = gbTabsItemList.map((_i, el) => $(el).text().replaceAll('\n', '')).toArray()
+
 	return {
 		postulations,
+		remote100,
+		language,
+		skills,
 	}
 }
 

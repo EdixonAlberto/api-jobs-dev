@@ -17,6 +17,9 @@ export type TJobPartial = {
 
 export type TJobDetails = {
 	postulations: number
+	remote100: boolean
+	language: string | 'spanish'
+	skills: string[]
 }
 
 export type TResponseAPI<D> = import('$/dto/Response.dto.ts').ResponseDto<D>

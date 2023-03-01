@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "denoland.vscode-deno",
-    "rangav.vscode-thunder-client",
-    "dzannotti.vscode-babel-coloring",
-    "jabacchetta.javascript-snippets",
-    "esbenp.prettier-vscode"
-  ]
-}

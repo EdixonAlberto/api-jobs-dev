@@ -2,7 +2,7 @@
 
 ![deno compatibility](https://shield.deno.dev/deno/1.31.1)
 
-API Rest para buscar empleo en el desarrollo de software. Creado con Deno 🦕
+API Rest para buscar empleo en desarrollo de software. Creado con Deno 🦕
 
 ## Inicio
 
@@ -37,26 +37,40 @@ Ejemplo de respuesta para `GET: /api/jobs`
   "total": 346,
   "jobs": [
     {
-      "title": "Java Developer (+3 Years of Experience)",
-      "role": "Senior",
+      "title": "Desarrollador/a Back-end Microservicios",
+      "role": "Semi Senior",
       "time": "Full time",
       "postulationFast": true,
-      "companyName": "Softserve",
-      "location": "Remote (Chile)",
-      "url": "https://www.getonbrd.com/jobs/programming/java-developer-3-years-of-experience-softserve-santiago",
+      "companyName": "Empresas SB",
+      "location": "Santiago (hybrid)",
+      "url": "https://www.getonbrd.com/jobs/programming/desarrollador-a-backend-empresas-sb-santiago",
       "perks": [
-        "pet friendly",
-        "flexible hours",
-        "health coverage",
+        "accessible",
+        "meals provided",
+        "bicycle parking",
+        "commuting buses",
+        "free car parking",
         "computer provided",
-        "informal dresscode",
-        "vacation over legal",
-        "beverages and snacks"
+        "education stipend",
+        "informal dresscode"
       ],
-      "isNew": false,
+      "isNew": true,
       "hasPublishedSalary": true,
       "details": {
-        "postulations": 25
+        "postulations": 127,
+        "remote100": false,
+        "language": "spanish",
+        "skills": [
+          "Agile",
+          "Back-end",
+          "Docker",
+          "Java",
+          "Microservices",
+          "Oracle",
+          "Software Analyst",
+          "Spring Boot",
+          "Virtualization"
+        ]
       }
     },
     { ... }

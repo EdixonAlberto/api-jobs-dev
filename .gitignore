@@ -1,9 +1,6 @@
 # FOLDERS
 .husky/
 .vscode/
-!.vscode/settings.json
-!.vscode/extensions.json
-!.vscode/launch.json
 
 # FILES
 .env*
