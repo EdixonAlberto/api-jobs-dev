@@ -1,29 +1,36 @@
-# API Getonboard
+# API Jobs Dev
 
-API Rest para buscar empleos desde la pagina de [Getonboard](https://www.getonbrd.com/). Creado con Deno 🦕
+![deno compatibility](https://shield.deno.dev/deno/1.31.1)
+
+API Rest para buscar empleo en el desarrollo de software. Creado con Deno 🦕
 
 ## Inicio
 
 Para iniciar el proyecto debe escribir uno de los siguientes comandos.
-```bash
+
+```sh
 # Inicia el servidor en modo desarrollo
 deno task dev
 
 # Inicia el servidor en modo producción
 deno task start
 ```
-Para cambiar la configuración por defecto debe crear un archivo `.env` en la raiz del proyecto, para esto compie la plantilla incorporada y cambie las variables que desee.
-```bash
+
+Para cambiar la configuración por defecto debe crear un archivo `.env` en la raiz del proyecto, para esto compie la
+plantilla incorporada y cambie las variables que desee.
+
+```sh
 cp .env.template .env
 ```
 
-## API
+## Endpoints
 
-| Nombre   | Método | Ruta      |
-| -------- | ------ | --------- |
-| Get Jobs | GET    | /api/jobs |
+| Método | Ruta      | Descripción                                      |
+| ------ | --------- | ------------------------------------------------ |
+| GET    | /api/jobs | Obtener todas las ofertas de trabajo             |
+| GET    | /api/docs | Página de documentación de la api (Proximamente) |
 
-Ejemplo de respuesta.
+Ejemplo de respuesta para `GET: /api/jobs`
 
 ```json
 {
@@ -56,15 +63,19 @@ Ejemplo de respuesta.
   ]
 }
 ```
-## Demo
 
-En la ruta [/demo](./demo/) se encuentra el código fuente de una página de demostración la cual consume la API y muestra los resultados en una interfaz elegante. Esta página ha sido creada con el framework `fresh` y puede ser ejecutada con el comando:
-```bash
-deno task demo
-```
+## Base de Datos Temporal
+
+Usando el comando `Deno task prepare:db` se crea una base de datos temporal en un archivo json ubicado en
+[./src/data/](./src/data/) donde se almacenan todas las ofertas de trabajo recopiladas desde las siguientes fuentes:
+
+- [x] Get On Board [https://www.getonbrd.com/](https://www.getonbrd.com/)
+
+- [ ] LinkedIn [https://www.linkedin.com/](https://www.linkedin.com/)
 
 ## Lista de Comandos
-```bash
+
+```sh
 # Prepara los datos e inicia el servidor en modo desarrollo
 deno task dev
 
@@ -72,13 +83,13 @@ deno task dev
 deno task start
 
 # Prepara los datos necesarios que consumirá la API
-deno task scrape
+deno task prepare:db
 
 # Actualiza deno.lock para sincronizarlo con ./deps.ts
-deno task update-lock
+deno task update:lock
 
 # Prepara husky en el proyecto
-deno task prepare-husky
+deno task prepare:husky
 
 # Ejcuta la página de demostración en el puerto 8000
 deno task demo
@@ -88,13 +99,16 @@ deno task demo
 
 - Primeo realizar un fork a este repositorio en el branch `main`.
 
-- Antes de empezar a crear commits en el proyecto deberá ejecutar el siguiente comando (una única vez) para preparar husky, esto permitirá mantener el codigo siempre limpio antes de subir cambios.
-```bash
+- Antes de empezar a crear commits en el proyecto deberá ejecutar el siguiente comando (una única vez) para preparar
+  husky, esto permitirá mantener el codigo siempre limpio antes de subir cambios.
+
+```sh
 deno task prepare-husky
 ```
 
 - Agregue los cambios y cree sus commits.
-```bash
+
+```sh
 git add .
 
 # Para agregar una nueva característica, escriba:
@@ -107,7 +121,6 @@ git push origin main
 ```
 
 - Por último deberá crear un PR al branch `dev`.
-
 
 ## Licencia
 

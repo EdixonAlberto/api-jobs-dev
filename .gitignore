@@ -6,5 +6,7 @@
 !.vscode/launch.json
 
 # FILES
-.env
+.env*
+!.env.template
 src/data/*.json
+example.html
