@@ -30,51 +30,31 @@ cp .env.template .env
 | GET    | /api/jobs | Obtener todas las ofertas de trabajo             |
 | GET    | /api/docs | Página de documentación de la api (Proximamente) |
 
-Ejemplo de respuesta para `GET: /api/jobs`
+Declaración de tipos de la respuesta entregada por el endpoint `GET: /api/jobs`
 
-```json
-{
-  "total": 346,
-  "jobs": [
-    {
-      "title": "Desarrollador/a Back-end Microservicios",
-      "role": "Semi Senior",
-      "time": "Full time",
-      "postulationFast": true,
-      "companyName": "Empresas SB",
-      "location": "Santiago (hybrid)",
-      "url": "https://www.getonbrd.com/jobs/programming/desarrollador-a-backend-empresas-sb-santiago",
-      "perks": [
-        "accessible",
-        "meals provided",
-        "bicycle parking",
-        "commuting buses",
-        "free car parking",
-        "computer provided",
-        "education stipend",
-        "informal dresscode"
-      ],
-      "isNew": true,
-      "hasPublishedSalary": true,
-      "details": {
-        "postulations": 127,
-        "remote100": false,
-        "language": "spanish",
-        "skills": [
-          "Agile",
-          "Back-end",
-          "Docker",
-          "Java",
-          "Microservices",
-          "Oracle",
-          "Software Analyst",
-          "Spring Boot",
-          "Virtualization"
-        ]
-      }
-    },
-    { ... }
-  ]
+```ts
+type TResponseList = {
+  total: number
+  data: TJob[]
+}
+
+type TJob = {
+  title: string
+  role: string
+  time: string
+  postulationFast: boolean
+  companyName: string
+  location: string
+  url: string
+  perks: string[]
+  isNew: boolean
+  hasPublishedSalary: boolean
+  details: {
+    postulations: number
+    remote100: boolean
+    language: string | 'spanish'
+    skills: string[]
+  }
 }
 ```
 

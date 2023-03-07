@@ -1,6 +1,7 @@
 # FOLDERS
 .husky/
-.vscode/
+.vscode/*
+!.vscode/extensions
 
 # FILES
 .env*

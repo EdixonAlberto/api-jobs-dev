@@ -16,9 +16,10 @@
     "deno.config": "./deno.json",
     "deno.lint": true,
     "deno.importMap": "./import_map.json",
+    "deno.enablePaths": ["."],
     "editor.formatOnSave": true,
     "[typescriptreact]": {
-      "editor.defaultFormatter": "denoland.vscode-deno"
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[typescript]": {
       "editor.defaultFormatter": "denoland.vscode-deno"
@@ -38,13 +39,7 @@
     "thunder-client.saveToWorkspace": true
   },
   "extensions": {
-    "recommendations": [
-      "denoland.vscode-deno",
-      "rangav.vscode-thunder-client",
-      "dzannotti.vscode-babel-coloring",
-      "jabacchetta.javascript-snippets",
-      "esbenp.prettier-vscode"
-    ]
+    "recommendations": ["rangav.vscode-thunder-client", "irongeek.vscode-env", "esbenp.prettier-vscode"]
   },
   "launch": {
     "version": "0.2.0",
