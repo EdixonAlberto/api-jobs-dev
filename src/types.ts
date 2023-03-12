@@ -3,6 +3,7 @@ export interface IJob extends TJobPartial {
 }
 
 export type TJobPartial = {
+	id: string
 	title: string
 	role: string
 	time: string

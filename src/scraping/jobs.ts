@@ -115,6 +115,7 @@ function getJobPartialList(jobsResultList: Cheerio<Element>, $: CheerioAPI): TJo
 			.hasClass('fa-money')
 
 		return {
+			id: generateIdfromUrl(url),
 			title,
 			role,
 			time,
@@ -170,21 +171,38 @@ function getJobDetails($: CheerioAPI): TJobDetails {
 		.children('.gb-rich-txt')
 		.has('ol').text() !== ''
 
-	const liList = isOl
-		? gbContainer
-			.children('div:nth-child(3)')
-			.children('.gb-rich-txt')
-			.children('ol')
-			.children('li')
-		: gbContainer
-			.children('div:nth-child(3)')
-			.children('.gb-rich-txt')
-			.children('ul')
-			.children('li')
+	const isUl = gbContainer
+		.children('div:nth-child(3)')
+		.children('.gb-rich-txt')
+		.has('ul').text() !== ''
 
-	const requestList = liList.map((_i, el) => $(el).text()).toArray()
-
+	const isList = isOl || isUl
 	let language = 'spanish'
+	let requestList: string[] = []
+
+	if (isList) {
+		const liList = isOl
+			? gbContainer
+				.children('div:nth-child(3)')
+				.children('.gb-rich-txt')
+				.children('ol')
+				.children('li')
+			: gbContainer
+				.children('div:nth-child(3)')
+				.children('.gb-rich-txt')
+				.children('ul')
+				.children('li')
+
+		requestList = liList.map((_i, el) => $(el).text()).toArray()
+	} else {
+		const paragraphs = gbContainer
+			.children('div:nth-child(3)')
+			.children('.gb-rich-txt')
+			.children('p')
+
+		requestList = paragraphs.html()?.split('<br>') || [paragraphs.text()]
+	}
+
 	for (const request of requestList) {
 		const hasEnglish: boolean = request.toLowerCase().search(/english|inglés/) > -1
 		if (hasEnglish) {
@@ -208,6 +226,13 @@ function getJobDetails($: CheerioAPI): TJobDetails {
 		language,
 		skills,
 	}
+}
+
+function generateIdfromUrl(url: string): string {
+	const name = url.split('/').pop() as string
+	const text = btoa(name)
+	const id = text.substring(0, (text.length / 2) - 1)
+	return id
 }
 
 scrapeJobs()
