@@ -1,8 +1,10 @@
 # API Jobs Dev
 
-![deno compatibility](https://shield.deno.dev/deno/1.31.1)
+![deno compatibility](https://shield.deno.dev/deno/1.31.2)
 
-API Rest para buscar empleo en desarrollo de software. Creado con Deno 🦕
+API Rest para buscar ofertas de trabajo remoto en proramación. Creado con Deno 🦕
+
+**Aplicación web &#x279c;**  [https://jobs-dev-web.netlify.app/](https://jobs-dev-web.netlify.app/)
 
 ## Inicio
 
