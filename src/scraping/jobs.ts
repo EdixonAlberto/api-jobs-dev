@@ -1,8 +1,8 @@
 import { Cheerio, CheerioAPI, Element } from 'cheerio/types'
 import { ConfigService } from '$/services/Config.service.ts'
 import { ScraperService } from '$/services/Scraper.service.ts'
+import { UtilService } from '$/services/Util.service.ts'
 import type { IJob, TJobDetails, TJobPartial } from '$types'
-
 const MODE_DEV = false
 
 export async function scrapeJobs(): Promise<void> {
@@ -17,7 +17,9 @@ export async function scrapeJobs(): Promise<void> {
 	)
 	const jobPartialList = getJobPartialList(sgbResultsList, $)
 	const cheerioResponses = await Promise.allSettled(
-		(MODE_DEV ? [jobPartialList[0]] : jobPartialList).map((job: TJobPartial) => scraper.execute(job.url)),
+		(MODE_DEV ? [jobPartialList[0]] : jobPartialList).map(async (job: Promise<TJobPartial>) =>
+			scraper.execute((await job).url)
+		),
 	)
 	const jobs: IJob[] = []
 
@@ -25,7 +27,7 @@ export async function scrapeJobs(): Promise<void> {
 		const cheerioResponse = cheerioResponses[i]
 
 		if (cheerioResponse.status === 'fulfilled') {
-			const jobPartial = jobPartialList[i]
+			const jobPartial = await jobPartialList[i]
 			const $ = cheerioResponse.value
 			const details = getJobDetails($)
 
@@ -39,8 +41,8 @@ export async function scrapeJobs(): Promise<void> {
 	if (!MODE_DEV) Deno.writeTextFile('./src/data/jobs.json', JSON.stringify(jobs, null, 2))
 }
 
-function getJobPartialList(jobsResultList: Cheerio<Element>, $: CheerioAPI): TJobPartial[] {
-	const jobs = $(jobsResultList).map((_i: number, el: Element) => {
+function getJobPartialList(jobsResultList: Cheerio<Element>, $: CheerioAPI): Promise<TJobPartial>[] {
+	const jobs = $(jobsResultList).map(async (_i: number, el: Element) => {
 		const elCheerio = $(el).children('a')
 
 		const elInfo = elCheerio
@@ -115,7 +117,7 @@ function getJobPartialList(jobsResultList: Cheerio<Element>, $: CheerioAPI): TJo
 			.hasClass('fa-money')
 
 		return {
-			id: generateIdfromUrl(url),
+			id: await UtilService.generateIdfromUrl(url),
 			title,
 			role,
 			time,
@@ -200,7 +202,11 @@ function getJobDetails($: CheerioAPI): TJobDetails {
 			.children('.gb-rich-txt')
 			.children('p')
 
-		requestList = paragraphs.html()?.split('<br>') || [paragraphs.text()]
+		if (paragraphs.toArray().length) {
+			requestList = paragraphs.map((_i, el) => $(el).text()).toArray()
+		} else {
+			requestList = paragraphs.html()?.split('<br>') || [paragraphs.text()]
+		}
 	}
 
 	for (const request of requestList) {
@@ -226,13 +232,6 @@ function getJobDetails($: CheerioAPI): TJobDetails {
 		language,
 		skills,
 	}
-}
-
-function generateIdfromUrl(url: string): string {
-	const name = url.split('/').pop() as string
-	const text = btoa(name)
-	const id = text.substring(0, (text.length / 2) - 1)
-	return id
 }
 
 scrapeJobs()

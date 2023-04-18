@@ -41,6 +41,7 @@ type TResponseList = {
 }
 
 type TJob = {
+  id: string
   title: string
   role: string
   time: string
